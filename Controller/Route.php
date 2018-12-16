@@ -41,39 +41,19 @@ class Route implements \Magento\Framework\App\RouterInterface
     public function match(\Magento\Framework\App\RequestInterface $request)
     {
         
-        
-        /*
-         * We will search “examplerouter” and “exampletocms” words and make forward depend on word
-         * -examplerouter will forward to base router to match inchootest front name, test controller path and test controller class
-         * -exampletocms will set front name to cms, controller path to page and action to view
-         */
         $identifier = trim($request->getPathInfo(), '/');
-        
-        print_r($identifier);
-        exit;
-      #  if(strpos($identifier, 'cheturoute') !== false) {
-            /*
-             * We must set module, controller path and action name + we will set page id 5 witch is about us page on
-             * default magento 2 installation with sample data.
-             */
-           #  $request->setModuleName('chetu')->setControllerName('checkout')->setActionName('test');
-     #   } else if(strpos($identifier, 'examplerouter') !== false) {
-            /*
-             * We must set module, controller path and action name for our controller class(Controller/Test/Test.php)
-             */
-       #    $request->setModuleName('cms')->setControllerName('page')->setActionName('view')->setParam('page_id', 5);
-
-        #} else {
-            //There is no match
-         #   return;
-       # }
- 
-        /*
-         * We have match and now we will forward action
-         */
-        return $this->actionFactory->create(
-            'Magento\Framework\App\Action\Forward',
-            ['request' => $request]
-        );
+       if(strpos($identifier, 'cheturoute') !== false) {
+       $request->setModuleName('cheturoute')-> //module name
+setControllerName('index')-> //controller name
+setActionName('index')-> //action name
+setParam('param', 3); //custom parameters
+       } else {
+           return false;
+       }
+       return $this->actionFactory->create(
+           'Magento\Framework\App\Action\Forward',
+           ['request' => $request]
+       );
+   }
     }
 }
